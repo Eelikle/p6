@@ -1,0 +1,14 @@
+{
+  "name": "p6",
+  "version": "1.0.0",
+  "description": "to start project 6 work",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "eelika",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
