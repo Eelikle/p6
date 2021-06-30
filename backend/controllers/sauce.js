@@ -4,9 +4,10 @@ const Sauce = require('../models/sauce');
 const fs = require('fs');
 
 exports.createSauce = (req, res, next) => {
+  console.log(req.body.sauce)
   const sauceBody = JSON.parse(req.body.sauce);
   const url = req.protocol + '://' + req.get('host');
-  const sauce = new sauce({
+  const sauce = new Sauce({
     name: sauceBody.name,
     description: sauceBody.description,
     imageUrl: url + '/images/' + req.file.filename,
@@ -19,7 +20,7 @@ exports.createSauce = (req, res, next) => {
     usersLiked : [],
     usersDisliked : [],
   });
-  Sauce.save().then(
+  sauce.save().then(
     () => {
       res.status(201).json({
         message: 'Post saved successfully!'
@@ -164,6 +165,8 @@ const foundSauce = Sauce.findOne({_id: req.params.id})
 
 const userId = req.body.userId;
 const like = req.body.like;
+1.
+
 
 // check fo rthe likes value
 if(like == 1){

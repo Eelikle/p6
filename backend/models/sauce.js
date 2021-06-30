@@ -7,7 +7,6 @@ const sauceSchema = mongoose.Schema({
   userId: { type: String, required: true },
   usersLiked: { type: Array, required: true },
   manufacturer: { type: String, required: true },
-  id: { type: String, required: true },
   mainPepper: { type: String, required: true },
   heat: { type: Number, required: true },
   likes: { type: Number, required: true },
