@@ -14,7 +14,7 @@ exports.createSauce = (req, res, next) => {
     manufacturer : sauceBody.manufacturer,
     userId: sauceBody.userId,
     heat : sauceBody.heat,
-    mainPepper : sauceBody.mainPepper,
+    mainPepper : sauceBody.mainPepper, // lastr vlaueto match
     likes : 0 ,
     dislikes : 0 , 
     usersLiked : [],
@@ -35,30 +35,6 @@ exports.createSauce = (req, res, next) => {
   );
 };
 
-
-
-// exports.createsauce = (req, res, next) => {
-//   const sauce = new sauce({
-//     title: req.body.title,
-//     description: req.body.description,
-//     imageUrl: req.body.imageUrl,
-//     price: req.body.price,
-//     userId: req.body.userId
-//   });
-//   sauce.save().then(
-//     () => {
-//       res.status(201).json({
-//         message: 'Post saved successfully!'
-//       });
-//     }
-//   ).catch(
-//     (error) => {
-//       res.status(400).json({
-//         error: error
-//       });
-//     }
-//   );
-// };
 
 exports.getOneSauce = (req, res, next) => {
   Sauce.findOne({
@@ -83,20 +59,23 @@ exports.modifySauce = (req, res, next) => {
     req.body.sauce = JSON.parse(req.body.sauce);
     sauce = {
       _id: req.params.id,
-      title: req.body.sauce.title,
+      name: req.body.sauce.name,
       description: req.body.sauce.description,
       imageUrl: url + '/images/' + req.file.filename,
-      price: req.body.sauce.price,
-      userId: req.body.sauce.userId
+      userId: req.body.sauce.userId,
+      manufacturer : req.body.sauce.manufacturer,
+      heat : req.body.sauce.heat,
+      mainPepper : req.body.sauce.mainPepper
     };
   } else {
     sauce = {
       _id: req.params.id,
-      title: req.body.title,
+      name: req.body.name,
       description: req.body.description,
-      imageUrl: req.body.imageUrl,
-      price: req.body.price,
-      userId: req.body.userId
+      userId: req.body.userId,
+      manufacturer : req.body.manufacturer,
+      heat : req.body.heat,
+      mainPepper : req.body.mainPepper
     };
   }
   Sauce.updateOne({_id: req.params.id}, sauce).then(
@@ -159,13 +138,13 @@ exports.getAllSauce = (req, res, next) => {
  * 
  * userliked is array we can push or splice from the array by uing (push  splice indexOf length)  
  */
-exports.likes = (req,res,next )=>{
+exports.likes = async (req,res,next )=>{
 
-const foundSauce = Sauce.findOne({_id: req.params.id})
+const foundSauce =await Sauce.findOne({_id: req.params.id})
 
 const userId = req.body.userId;
 const like = req.body.like;
-1.
+
 
 
 // check fo rthe likes value
@@ -191,6 +170,10 @@ foundSauce.likes = foundSauce.usersLiked.length
   foundSauce.dislikes = foundSauce.usersDisliked.length
 }
 
-foundSauce.save()
 
+foundSauce.save()
+res.status(200).json({
+  message: 'Form updated for likes/dislikes'
+});
 }
+
