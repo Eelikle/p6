@@ -52,7 +52,9 @@ exports.getOneSauce = (req, res, next) => {
   );
 };
 
-exports.modifySauce = (req, res, next) => {
+exports.modifySauce = async(req, res, next) => {
+  let oldSauce =await Sauce.findById(req.params.id).then(saucel=> saucel)
+  console.log(oldSauce)
   let sauce = new Sauce({ _id: req.params._id });
   if (req.file) {
     const url = req.protocol + '://' + req.get('host');
@@ -74,8 +76,9 @@ exports.modifySauce = (req, res, next) => {
       description: req.body.description,
       userId: req.body.userId,
       manufacturer : req.body.manufacturer,
-      heat : req.body.heat,
-      mainPepper : req.body.mainPepper
+      heat : req.body.heat ? req.body.heat : oldSauce.heat ,
+      mainPepper : req.body.mainPepper ? req.body.mainPepper : oldSauce.mainPepper,
+      imageUrl : oldSauce.imageUrl
     };
   }
   Sauce.updateOne({_id: req.params.id}, sauce).then(
