@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// modify the data from PDF 
+
 const sauceSchema = mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },

@@ -5,11 +5,10 @@ const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config')
 
 const sauceCtrl = require('../controllers/sauce');
-// pleas3 don't forgert the auth in the routes 
+
 router.get('/', auth, sauceCtrl.getAllSauce);
 router.post('/', auth,multer ,sauceCtrl.createSauce);
 router.get('/:id', auth, sauceCtrl.getOneSauce);
-// to be checked 
 router.put('/:id', auth, multer, sauceCtrl.modifySauce);
 router.delete('/:id', auth , sauceCtrl.deleteSauce);
 router.post('/:id/like', auth, multer, sauceCtrl.likes);

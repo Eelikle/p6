@@ -14,7 +14,7 @@ exports.createSauce = (req, res, next) => {
     manufacturer : sauceBody.manufacturer,
     userId: sauceBody.userId,
     heat : sauceBody.heat,
-    mainPepper : sauceBody.mainPepper, // lastr vlaueto match
+    mainPepper : sauceBody.mainPepper, 
     likes : 0 ,
     dislikes : 0 , 
     usersLiked : [],
@@ -133,14 +133,7 @@ exports.getAllSauce = (req, res, next) => {
   );
 };
 
-// liked and disliked 
-/**
- * like  = 1  the user likes the sauce 
- * like  = -1 the user dislikes the sauce 
- * like  = 0  the user unlikes or un disliked the sauce 
- * 
- * userliked is array we can push or splice from the array by uing (push  splice indexOf length)  
- */
+
 exports.likes = async (req,res,next )=>{
 
 const foundSauce =await Sauce.findOne({_id: req.params.id})
@@ -150,18 +143,16 @@ const like = req.body.like;
 
 
 
-// check fo rthe likes value
+
 if(like == 1){
-  //check if the user likes the sauce before 
+ 
 if(!foundSauce.usersLiked.includes(userId)){
   foundSauce.usersLiked.push(userId)
 }else{
-  // if user liked before we remove the user likes 
   const userIndex = foundSauce.usersLiked.indexOf(userId)
   foundSauce.usersLiked.splice(1,userIndex)
 }
-// we update the likes number based on the changes we made 
-foundSauce.likes = foundSauce.usersLiked.length
+ foundSauce.likes = foundSauce.usersLiked.length
 
 }else if (like == -1){
   if(!foundSauce.usersDisliked.includes(userId)){
@@ -172,8 +163,6 @@ foundSauce.likes = foundSauce.usersLiked.length
   }
   foundSauce.dislikes = foundSauce.usersDisliked.length
 }
-
-
 foundSauce.save()
 res.status(200).json({
   message: 'Form updated for likes/dislikes'
